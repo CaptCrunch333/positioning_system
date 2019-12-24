@@ -20,6 +20,7 @@ add_service_files(
   Arm.srv
   Update_Controller.srv
   Reset_Controller.srv
+  Update_Pose_Reference.srv
 )
 
 generate_messages(

@@ -2,13 +2,13 @@
 #include "common_types.hpp"
 #include "MsgEmitter.hpp"
 #include "MsgReceiver.hpp"
-#include "UserReferenceMessage.hpp"
+#include "UpdatePoseMessage.hpp"
 #include "FlightScenarioMessage.hpp"
 
 class UserReference : public msg_emitter, public msg_receiver{
 
 private:
-    UserReferenceMessage _user_msg;
+    UpdatePoseMessage _user_msg;
 
 public:
 

@@ -31,15 +31,19 @@ void AccGyroAttitudeObserver::loopInternal()
     {
         m_filtered_attitude_temp.pitch = m_pitch_filter->getFilteredData(gyro_data.x);
         m_filtered_attitude_temp.roll = m_roll_filter->getFilteredData(gyro_data.y);
+        //std::cout << " 1 " << std::endl;
     }
     else
     {
         m_filtered_attitude_temp.pitch = m_pitch_filter->getFilteredData(acc_attitude.pitch, gyro_data.x);
         m_filtered_attitude_temp.roll = m_roll_filter->getFilteredData(acc_attitude.roll, gyro_data.y);
+        //std::cout << " 2 " << std::endl;
     }
 
-    //std::cout << "Pitch: " << filtered_attitude.pitch << std::endl;
-    //std::cout << "Roll: " << filtered_attitude.roll << std::endl;
+    // std::cout << "Acc x: " << acc_data.x << std::endl;
+    // std::cout << "Acc y: " << acc_data.y << std::endl;
+    // std::cout << "Gyro x: " << gyro_data.x << std::endl;
+    // std::cout << "Gyro y: " << gyro_data.y << std::endl;
 
     m_filtered_attitude = m_filtered_attitude_temp;
 }
@@ -57,7 +61,7 @@ AttitudeMsg AccGyroAttitudeObserver::getAttitude()
 AttitudeMsg AccGyroAttitudeObserver::getAccAttitude()
 {
     AttitudeMsg acc_att;
-    acc_att.pitch =  atan2( - acc_data.y , sqrt((acc_data.x*acc_data.x) + (acc_data.z*acc_data.z)));
-    acc_att.roll = atan2( - acc_data.x , sqrt((acc_data.y*acc_data.y) + (acc_data.z*acc_data.z)));
+    acc_att.pitch =  atan2( acc_data.y , sqrt((acc_data.x*acc_data.x) + (acc_data.z*acc_data.z)));
+    acc_att.roll = atan2( acc_data.x , sqrt((acc_data.y*acc_data.y) + (acc_data.z*acc_data.z)));
     return acc_att;
 }

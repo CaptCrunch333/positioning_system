@@ -60,14 +60,6 @@ void ControlSystemMessage::setControlSystemMessage(control_system_msg_type t_typ
     _type = msg_type::control_system;
 }
 
-void ControlSystemMessage::setControlSystemMessage(control_system t_source, control_system t_destination, control_system_msg_type t_type, float t_data){
-    _type = msg_type::control_system;
-    _source = t_source;
-    _destination = t_destination;
-    _control_system_msg_type = t_type;
-    _data = t_data;
-}
-
 void ControlSystemMessage::setControlSystemMessage(control_system t_source, control_system_msg_type t_type, Vector3D<float> t_data){
     _type = msg_type::control_system;
     _source = t_source;

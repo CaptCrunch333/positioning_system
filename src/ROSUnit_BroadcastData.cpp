@@ -45,7 +45,8 @@ void ROSUnit_BroadcastData::receive_msg_data(DataMessage* t_msg){
             if(ros_msg->getAttitude().roll != 0){
                 _att = ros_msg->getAttitude();
             }
-            if(ros_msg->getHeading().yaw != 0){
+            //TODO refactor this. only for test.
+            if(abs(ros_msg->getHeading().yaw) > 0.00001){
                 _head = ros_msg->getHeading();
             }
             geometry_msgs::PointStamped msg;

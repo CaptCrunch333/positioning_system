@@ -31,7 +31,6 @@ bool ROSUnit_UpdateController::callbackUpdateController(positioning_system::Upda
     data.en_pv_derivation = req.parameters.en_pv_derivation;
     data.id = static_cast<block_id>((int)req.parameters.id);
 
-    std::cout << "ID Term: " << (int)req.parameters.id << " " << (int)(data.id) << std::endl;
     _update_controller_msg.setPIDParam(data);
     _instance_ptr->emit_message((DataMessage*) &_update_controller_msg);
     

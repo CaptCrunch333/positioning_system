@@ -2,7 +2,7 @@
 #include "ROSUnit.hpp"
 #include "FlightScenarioMessage.hpp"
 #include <geometry_msgs/PoseStamped.h>
-#include "UserReferenceMessage.hpp"
+#include "UpdatePoseMessage.hpp"
 #include "Vector3D.hpp"
 #include "PID_values.hpp"
 #include <positioning_system/PID_param.h>

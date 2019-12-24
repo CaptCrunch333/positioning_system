@@ -14,7 +14,7 @@ class ROSUnit_ResetController :  public ROSUnit{
         static ROSUnit_ResetController* _instance_ptr;
         static ResetControllerMsg _reset_msg; 
         ros::ServiceServer _srv_reset_controller;
-        static bool callbackArm(positioning_system::Reset_Controller::Request  &req, positioning_system::Reset_Controller::Response &res);
+        static bool callbackResetController(positioning_system::Reset_Controller::Request  &req, positioning_system::Reset_Controller::Response &res);
         void receive_msg_data(DataMessage* t_msg);  
 
     public:

@@ -71,11 +71,11 @@ int main(int argc, char** argv) {
     
     
      ComplementaryFilter filter1, filter2, filter3;
-
-     ComplementaryFilterSettings settings(false, 0.001);
+    //TODO second argument should be dt of IMU sampling rate
+     ComplementaryFilterSettings settings(false, 0.005, 0.995);
 
      myAttObserver.setFilterType(&filter1, &filter2);
-     myAttObserver.updateSettings(&settings, 0.05);
+     myAttObserver.updateSettings(&settings, 0.1);
 
      Roll_PVProvider* myRollPV = (Roll_PVProvider*) &myAttObserver;
      Pitch_PVProvider* myPitchPV = (Pitch_PVProvider*) &myAttObserver;
@@ -175,7 +175,7 @@ int main(int argc, char** argv) {
 
     myROSArm->add_callback_msg_receiver((msg_receiver*) myActuationSystem);
 
-    //********************SETTING FLIGHT SCENARIO OUTPUTS***************************
+    // //********************SETTING FLIGHT SCENARIO OUTPUTS***************************
 
     X_ControlSystem->add_callback_msg_receiver((msg_receiver*)myROSBroadcastData);
     Y_ControlSystem->add_callback_msg_receiver((msg_receiver*)myROSBroadcastData);
@@ -200,52 +200,52 @@ int main(int argc, char** argv) {
     //***********************SETTING PID INITIAL VALUES*****************************
 
     PID_parameters* pid_para_test = new PID_parameters;
-    pid_para_test->kp = 2.0;
+    pid_para_test->kp = 0.5;
     pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kd = 0.1;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     X_ControlSystem->changePIDSettings(pid_para_test);
 
-    pid_para_test->kp = 2.0;
+    pid_para_test->kp = 5.0;
     pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kd = 1.0;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     Pitch_ControlSystem->changePIDSettings(pid_para_test);
 
-    pid_para_test->kp = 2.0;
+    pid_para_test->kp = 0.5;
     pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kd = 0.1;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     Y_ControlSystem->changePIDSettings(pid_para_test);
 
-    pid_para_test->kp = 2.0;
+    pid_para_test->kp = 5.0;
     pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kd = 1.0;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     Roll_ControlSystem->changePIDSettings(pid_para_test);
 
-    pid_para_test->kp = 2.0;
-    pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kp = 0.2;
+    pid_para_test->ki = 0.02;
+    pid_para_test->kd = 0.05;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     Z_ControlSystem->changePIDSettings(pid_para_test);
 
-    pid_para_test->kp = 2.0;
+    pid_para_test->kp = 0.2;
     pid_para_test->ki = 0.0;
-    pid_para_test->kd = 0.0;
+    pid_para_test->kd = 0.04;
     pid_para_test->kdd = 0.0;
     pid_para_test->anti_windup = 0;
-    pid_para_test->en_pv_derivation = 0;
+    pid_para_test->en_pv_derivation = 1;
     Yaw_ControlSystem->changePIDSettings(pid_para_test);
     
 
@@ -301,7 +301,7 @@ int main(int argc, char** argv) {
          std::cout << "Unsuccessful in setting thread realtime prior " << ret << std::endl;
      }
 
-     performCalibration(myIMU);
+     //performCalibration(myIMU);
 
     while(ros::ok()){
 
@@ -326,7 +326,7 @@ void performCalibration(NAVIOMPU9250_sensor* t_imu){
 
     std::cout << "1 Second passed" << std::endl;
     
-    t_imu->getAcc()->startCalibration();
+    //t_imu->getAcc()->startCalibration();
     t_imu->getGyro()->startCalibration(); 
     std::cout << "CALIBRATION STARTED..." << std::endl;
 
@@ -335,13 +335,13 @@ void performCalibration(NAVIOMPU9250_sensor* t_imu){
     std::cout << "CALIBRATION RUNNING....................................................................." << std::endl;
     while(consumed_time < 5000){
         consumed_time = _calib_timer->tockMilliSeconds();     
-        t_imu->getAcc()->getCalibratedData();
+        //t_imu->getAcc()->getCalibratedData();
         t_imu->getGyro()->getCalibratedData(); 
     }
 
 
     std::cout << "5 Second passed" << std::endl;
-    t_imu->getAcc()->stopCalibration();
+    //t_imu->getAcc()->stopCalibration();
     t_imu->getGyro()->stopCalibration();
     std::cout << "CALIBRATION ENDED" << std::endl;
 

@@ -1,8 +1,9 @@
 #pragma once
 #include "ROSUnit.hpp"
 #include "FlightScenarioMessage.hpp"
-#include "UserReferenceMessage.hpp"
+#include "UpdatePoseMessage.hpp"
 #include <positioning_system/Waypoint.h>
+#include <positioning_system/Update_Pose_Reference.h>
 #include "Vector3D.hpp"
 
 class ROSUnit_UpdateReference :  public ROSUnit{
@@ -10,9 +11,10 @@ class ROSUnit_UpdateReference :  public ROSUnit{
     private:
         //TODO receive msgs from a service through a callback 
         static ROSUnit_UpdateReference* _instance_ptr;
-        static UserReferenceMessage user_msg; 
-        ros::Subscriber _sub_setpoint;
-        static void callbackSetpoint(const positioning_system::Waypoint& msg);
+        static UpdatePoseMessage _pose_ref_msg; 
+        ros::ServiceServer _srv_setpoint;
+        static bool callbackSetpoint(positioning_system::Update_Pose_Reference::Request  &req, 
+                                     positioning_system::Update_Pose_Reference::Response &res);
         void receive_msg_data(DataMessage* t_msg);  
 
     public:

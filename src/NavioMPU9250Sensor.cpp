@@ -44,6 +44,9 @@ void NAVIOMPU9250_sensor::updateReadings()
 		_imu.read_raw_accelerometer(&(m_acc.x), &(m_acc.y), &(m_acc.z));
 		_imu.read_raw_gyroscope(&(m_gyro.x), &(m_gyro.y), &(m_gyro.z));
 		_imu.read_raw_magnetometer(&(m_mag.x), &(m_mag.y), &(m_mag.z));
+		m_gyro.x = -1*m_gyro.x;
+		m_acc.x = -1* m_acc.x;
+		m_acc.y = -1* m_acc.y;
 		_timer.tick();
 	}
 }

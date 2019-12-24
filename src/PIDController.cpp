@@ -21,6 +21,7 @@ void PIDController::receive_msg_data(DataMessage* t_msg){
 		ResetControllerMsg* reset_msg = (ResetControllerMsg*)t_msg;
 
 		if(static_cast<block_id>(reset_msg->getData()) == this->_name){
+			std::cout << "RESET CONTROLLER: " << (int)this->_name << std::endl;
 			this->reset();
 		}
 	}
@@ -115,7 +116,7 @@ float PIDController::pid_direct(float err, float pv_first, float pv_second) { //
 	// ************************** D-term ***************************
 	if (d_term) {
 		if (en_pv_derivation) {
-			u += parameters.kd*(-pv_first);
+			u += parameters.kd*(pv_first);
 		}
 		else {
 			u += parameters.kd*(err - prev_err) / _dt;
